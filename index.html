@@ -1,46 +1,1160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pinnacle Digital Store</title>
-  <style>
-    body {font-family: Arial, sans-serif; margin:0; background:#f5f5f5; color:#333;}
-    header {background:#222; color:#fff; padding:40px 20px; text-align:center;}
-    h1 {margin:0; font-size:2.5em;}
-    p.tagline {font-size:1.2em; margin-top:10px; color:#ddd;}
-    section {padding:40px 20px; text-align:center;}
-    h2 {color:#0078d7;}
-    .category {margin:30px 0;}
-    .btn {display:inline-block; padding:12px 24px; background:#0078d7; color:#fff; text-decoration:none; border-radius:5px;}
-    footer {background:#222; color:#fff; padding:20px; text-align:center;}
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pinnacle Digital Store — Premium Downloads</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ─── TOKENS ─── */
+:root{
+  --gold:#C9A84C;--gold-hi:#E8C97A;--gold-lo:#8a6620;
+  --ink:#09090b;--ink2:#18181b;--ink3:#27272a;
+  --bone:#f5f2ea;--bone2:#eee9de;--bone3:#ddd7c8;
+  --text:#1c1917;--muted:#78716c;--faint:#e7e2d8;
+  --r:12px;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bone);color:var(--text);overflow-x:hidden;}
+
+/* ─── NAV ─── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(245,242,234,.92);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--bone3);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6vw;height:62px;
+}
+.logo{
+  font-family:var(--serif);font-size:1.2rem;font-weight:900;
+  color:var(--ink);letter-spacing:-.01em;
+  display:flex;align-items:center;gap:.5rem;
+}
+.logo-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--gold);display:inline-block;
+}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{
+  font-size:.85rem;font-weight:500;color:var(--muted);
+  text-decoration:none;transition:color .2s;cursor:pointer;
+}
+.nav-links a:hover{color:var(--ink);}
+.nav-cta{
+  background:var(--ink);color:var(--bone);border:none;
+  border-radius:50px;padding:.5rem 1.2rem;
+  font-size:.82rem;font-weight:600;cursor:pointer;
+  font-family:var(--sans);transition:background .2s;
+  display:flex;align-items:center;gap:.4rem;
+}
+.nav-cta:hover{background:var(--ink3);}
+.cart-pill{
+  background:var(--gold);color:var(--ink);
+  border-radius:50%;width:18px;height:18px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:700;
+}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:88vh;display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;gap:4rem;
+  padding:5rem 6vw 4rem;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;
+  right:-120px;top:50%;transform:translateY(-50%);
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,76,.15) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-left{position:relative;z-index:1;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.72rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--gold-lo);
+  background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);
+  border-radius:50px;padding:.3rem .85rem;margin-bottom:1.4rem;
+}
+.hero-eyebrow svg{width:10px;height:10px;fill:var(--gold);}
+.hero h1{
+  font-family:var(--serif);
+  font-size:clamp(2.8rem,5vw,4.2rem);
+  font-weight:900;line-height:1.05;
+  letter-spacing:-.03em;color:var(--ink);
+  margin-bottom:1.2rem;
+}
+.hero h1 em{
+  color:var(--gold);font-style:normal;
+  position:relative;
+}
+.hero h1 em::after{
+  content:'';position:absolute;
+  bottom:-4px;left:0;right:0;height:3px;
+  background:var(--gold);border-radius:2px;opacity:.5;
+}
+.hero-sub{
+  font-size:1.05rem;line-height:1.7;
+  color:var(--muted);max-width:440px;margin-bottom:2rem;
+}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;}
+.btn-primary{
+  background:var(--ink);color:var(--bone);
+  border:none;border-radius:50px;
+  padding:.8rem 2rem;font-size:.95rem;font-weight:600;
+  cursor:pointer;font-family:var(--sans);
+  transition:all .2s;text-decoration:none;display:inline-block;
+}
+.btn-primary:hover{background:var(--gold);color:var(--ink);}
+.btn-ghost{
+  background:transparent;border:1.5px solid var(--bone3);
+  color:var(--muted);border-radius:50px;
+  padding:.8rem 1.8rem;font-size:.95rem;font-weight:500;
+  cursor:pointer;font-family:var(--sans);transition:all .2s;
+}
+.btn-ghost:hover{border-color:var(--ink);color:var(--ink);}
+.hero-proof{
+  display:flex;gap:2rem;margin-top:2.5rem;flex-wrap:wrap;
+}
+.proof-item{text-align:left;}
+.proof-num{
+  font-family:var(--serif);font-size:1.8rem;font-weight:900;
+  color:var(--ink);line-height:1;
+}
+.proof-label{font-size:.75rem;color:var(--muted);margin-top:.2rem;}
+
+/* hero right – product stack */
+.hero-right{
+  position:relative;display:flex;
+  justify-content:center;align-items:center;
+}
+.product-stack{position:relative;width:340px;height:400px;}
+.stack-card{
+  position:absolute;border-radius:18px;
+  width:280px;padding:1.6rem;
+  display:flex;flex-direction:column;gap:.8rem;
+  border:1px solid var(--bone3);
+  transition:transform .3s;
+}
+.stack-card:hover{transform:translateY(-4px);}
+.sc1{
+  background:var(--ink);
+  top:0;left:30px;z-index:3;
+  box-shadow:0 24px 48px rgba(0,0,0,.18);
+}
+.sc2{
+  background:var(--bone2);
+  top:40px;left:10px;z-index:2;
+  box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+.sc3{
+  background:var(--bone3);
+  top:80px;left:-10px;z-index:1;
+}
+.sc-icon{font-size:1.8rem;line-height:1;}
+.sc-label{
+  font-size:.65rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;opacity:.5;
+}
+.sc1 .sc-label{color:var(--gold);}
+.sc-title{
+  font-family:var(--serif);font-size:1rem;
+  font-weight:700;line-height:1.2;
+}
+.sc1 .sc-title{color:#fff;}
+.sc-price{
+  font-size:.85rem;font-weight:600;color:var(--gold);
+}
+.stack-badge{
+  position:absolute;bottom:20px;right:-10px;z-index:10;
+  background:var(--gold);border-radius:50px;
+  padding:.5rem 1rem;
+  font-size:.72rem;font-weight:700;color:var(--ink);
+  box-shadow:0 6px 20px rgba(201,168,76,.4);
+  white-space:nowrap;
+}
+
+/* ─── MARQUEE ─── */
+.marquee-wrap{
+  background:var(--ink);padding:.7rem 0;
+  overflow:hidden;border-top:1px solid var(--ink3);
+  border-bottom:1px solid var(--ink3);
+}
+.marquee-track{
+  display:flex;gap:3rem;
+  animation:marquee 22s linear infinite;
+  width:max-content;
+}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.marquee-item{
+  display:flex;align-items:center;gap:.6rem;
+  font-size:.75rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:rgba(255,255,255,.5);
+  white-space:nowrap;
+}
+.marquee-item span{color:var(--gold);}
+
+/* ─── SECTION HEADERS ─── */
+.section-wrap{padding:5rem 6vw;}
+.section-header{margin-bottom:3rem;}
+.s-eyebrow{
+  font-size:.7rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--gold-lo);margin-bottom:.6rem;
+}
+.section-header h2{
+  font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.6rem);
+  font-weight:900;letter-spacing:-.03em;color:var(--ink);
+  line-height:1.1;margin-bottom:.6rem;
+}
+.section-header p{font-size:1rem;color:var(--muted);max-width:480px;line-height:1.6;}
+
+/* ─── FEATURED PRODUCTS ─── */
+.featured-bg{background:var(--bone);}
+.products-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+  gap:1.5rem;
+}
+.product-card{
+  background:#fff;border-radius:18px;
+  border:1px solid var(--bone3);overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:transform .25s,box-shadow .25s,border-color .25s;
+  cursor:pointer;
+}
+.product-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 20px 50px rgba(0,0,0,.09);
+  border-color:rgba(201,168,76,.4);
+}
+.card-cover{
+  height:180px;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.card-cover-icon{font-size:4rem;position:relative;z-index:1;}
+.card-cover-bg{
+  position:absolute;inset:0;opacity:.06;
+  font-size:9rem;display:flex;align-items:center;justify-content:center;
+  transform:rotate(-10deg);pointer-events:none;
+}
+.tag{
+  position:absolute;top:.8rem;left:.8rem;
+  font-size:.65rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.06em;border-radius:50px;
+  padding:.25rem .65rem;
+}
+.tag-hot{background:#fef2e7;color:#c2570a;}
+.tag-new{background:#f0e8ff;color:#6b21a8;}
+.tag-bestseller{background:#e8f5e9;color:#166534;}
+
+.card-body{padding:1.3rem;flex:1;display:flex;flex-direction:column;gap:.5rem;}
+.card-cat{
+  font-size:.68rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--gold-lo);
+}
+.card-title{
+  font-family:var(--serif);font-size:1.05rem;font-weight:700;
+  color:var(--ink);line-height:1.25;
+}
+.card-desc{font-size:.82rem;color:var(--muted);line-height:1.55;flex:1;}
+.card-meta{
+  display:flex;gap:1rem;font-size:.75rem;color:var(--muted);
+  padding:.6rem 0;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);
+}
+.card-meta span{display:flex;align-items:center;gap:.3rem;}
+.stars{color:var(--gold);}
+.card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:.5rem;
+}
+.card-price{
+  font-family:var(--serif);font-size:1.3rem;font-weight:900;color:var(--ink);
+}
+.card-price-old{font-size:.8rem;color:var(--muted);text-decoration:line-through;margin-left:.3rem;}
+.card-btn{
+  background:var(--ink);color:var(--bone);
+  border:none;border-radius:50px;
+  padding:.45rem 1.1rem;font-size:.8rem;font-weight:600;
+  cursor:pointer;font-family:var(--sans);
+  transition:all .2s;
+}
+.card-btn:hover{background:var(--gold);color:var(--ink);}
+.card-btn.added{background:var(--gold);color:var(--ink);}
+
+/* ─── CATEGORY ICONS STRIP ─── */
+.categories-bg{background:var(--ink);}
+.categories-grid{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;
+}
+.cat-card{
+  background:var(--ink2);border:1px solid var(--ink3);
+  border-radius:14px;padding:1.4rem 1rem;
+  text-align:center;cursor:pointer;
+  transition:all .2s;display:flex;flex-direction:column;
+  align-items:center;gap:.6rem;
+}
+.cat-card:hover{background:var(--ink3);border-color:rgba(201,168,76,.4);}
+.cat-card.active{border-color:var(--gold);background:rgba(201,168,76,.08);}
+.cat-icon{font-size:1.8rem;line-height:1;}
+.cat-name{
+  font-size:.72rem;font-weight:600;color:rgba(255,255,255,.6);
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.cat-card.active .cat-name{color:var(--gold);}
+.cat-count{
+  font-size:.65rem;color:rgba(255,255,255,.3);
+  background:var(--ink3);border-radius:50px;
+  padding:.1rem .5rem;
+}
+.cat-card.active .cat-count{background:rgba(201,168,76,.2);color:var(--gold);}
+
+/* ─── BUNDLE BANNER ─── */
+.bundle-section{background:var(--bone2);padding:5rem 6vw;}
+.bundle-card{
+  background:var(--ink);border-radius:24px;
+  padding:3.5rem 4rem;
+  display:grid;grid-template-columns:1fr auto;
+  gap:3rem;align-items:center;
+  position:relative;overflow:hidden;
+}
+.bundle-card::before{
+  content:'';position:absolute;
+  right:-80px;top:-80px;
+  width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,76,.12),transparent 70%);
+  pointer-events:none;
+}
+.bundle-eyebrow{
+  font-size:.7rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--gold);margin-bottom:.8rem;
+}
+.bundle-card h2{
+  font-family:var(--serif);font-size:2.2rem;font-weight:900;
+  color:#fff;letter-spacing:-.03em;line-height:1.1;margin-bottom:.8rem;
+}
+.bundle-card p{color:rgba(255,255,255,.55);font-size:.95rem;line-height:1.6;max-width:460px;margin-bottom:1.5rem;}
+.bundle-includes{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem;}
+.bundle-tag{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  border-radius:50px;padding:.3rem .85rem;
+  font-size:.75rem;color:rgba(255,255,255,.7);
+  display:flex;align-items:center;gap:.4rem;
+}
+.bundle-tag span{font-size:.9rem;}
+.bundle-right{text-align:center;flex-shrink:0;}
+.bundle-price-old{font-size:1rem;color:rgba(255,255,255,.35);text-decoration:line-through;margin-bottom:.3rem;}
+.bundle-price{
+  font-family:var(--serif);font-size:3.2rem;font-weight:900;
+  color:var(--gold);line-height:1;margin-bottom:.4rem;
+}
+.bundle-save{
+  font-size:.75rem;font-weight:700;color:var(--gold);
+  background:rgba(201,168,76,.15);border-radius:50px;
+  padding:.25rem .8rem;display:inline-block;margin-bottom:1.2rem;
+}
+.bundle-cta{
+  background:var(--gold);color:var(--ink);
+  border:none;border-radius:50px;
+  padding:.9rem 2.2rem;font-size:1rem;font-weight:700;
+  cursor:pointer;font-family:var(--sans);
+  transition:background .2s;white-space:nowrap;
+}
+.bundle-cta:hover{background:var(--gold-hi);}
+
+/* ─── TRUST STRIP ─── */
+.trust-strip{
+  background:var(--bone);padding:2.5rem 6vw;
+  display:flex;justify-content:center;gap:4rem;flex-wrap:wrap;
+  border-top:1px solid var(--bone3);border-bottom:1px solid var(--bone3);
+}
+.trust-item{
+  display:flex;align-items:center;gap:.7rem;
+  font-size:.85rem;color:var(--muted);font-weight:500;
+}
+.trust-icon{font-size:1.2rem;}
+
+/* ─── TESTIMONIALS ─── */
+.testimonials-bg{background:var(--bone2);padding:5rem 6vw;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.testi-card{
+  background:#fff;border:1px solid var(--bone3);border-radius:16px;
+  padding:1.6rem;display:flex;flex-direction:column;gap:1rem;
+}
+.testi-stars{color:var(--gold);font-size:1rem;letter-spacing:.1rem;}
+.testi-text{
+  font-size:.9rem;line-height:1.65;color:var(--text);
+  font-style:italic;flex:1;
+}
+.testi-text::before{content:'\201C';}
+.testi-text::after{content:'\201D';}
+.testi-author{display:flex;align-items:center;gap:.7rem;}
+.testi-avatar{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;background:var(--bone2);flex-shrink:0;
+}
+.testi-name{font-size:.85rem;font-weight:600;color:var(--ink);}
+.testi-role{font-size:.75rem;color:var(--muted);}
+
+/* ─── CART SIDEBAR ─── */
+.overlay{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(9,9,11,.5);backdrop-filter:blur(4px);
+}
+.overlay.open{display:block;}
+.cart{
+  position:fixed;top:0;right:-420px;
+  width:380px;max-width:96vw;height:100vh;
+  background:#fff;z-index:201;
+  display:flex;flex-direction:column;
+  transition:right .3s cubic-bezier(.4,0,.2,1);
+  border-left:1px solid var(--bone3);
+}
+.cart.open{right:0;}
+.cart-head{
+  padding:1.5rem;border-bottom:1px solid var(--bone3);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.cart-head h3{font-family:var(--serif);font-size:1.15rem;font-weight:700;color:var(--ink);}
+.close-x{
+  background:var(--bone);border:none;border-radius:8px;
+  width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1rem;color:var(--muted);transition:color .2s;
+}
+.close-x:hover{color:var(--ink);}
+.cart-body{flex:1;overflow-y:auto;padding:1.2rem;}
+.cart-empty-state{
+  height:100%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:1rem;color:var(--muted);text-align:center;
+}
+.cart-empty-state .empty-icon{font-size:3rem;opacity:.3;}
+.cart-line{
+  display:flex;gap:.9rem;align-items:flex-start;
+  background:var(--bone);border-radius:10px;
+  padding:.9rem;margin-bottom:.8rem;
+}
+.cart-line-icon{font-size:1.7rem;flex-shrink:0;}
+.cart-line-info{flex:1;}
+.cart-line-name{font-size:.85rem;font-weight:600;color:var(--ink);margin-bottom:.2rem;}
+.cart-line-price{font-size:.82rem;font-weight:600;color:var(--gold-lo);}
+.rm-btn{
+  background:none;border:none;color:var(--muted);
+  cursor:pointer;padding:.2rem;font-size:.9rem;transition:color .2s;
+}
+.rm-btn:hover{color:#ef4444;}
+.cart-foot{
+  padding:1.2rem;border-top:1px solid var(--bone3);
+}
+.cart-row{
+  display:flex;justify-content:space-between;
+  font-size:.88rem;color:var(--muted);padding:.25rem 0;
+}
+.cart-row.big{
+  font-family:var(--serif);font-weight:700;
+  font-size:1.1rem;color:var(--ink);
+  border-top:1px solid var(--bone3);margin-top:.5rem;padding-top:.8rem;margin-bottom:1rem;
+}
+.cart-row.big span:last-child{color:var(--gold-lo);}
+.checkout-cta{
+  width:100%;background:var(--ink);color:var(--bone);
+  border:none;border-radius:50px;padding:.9rem;
+  font-size:.95rem;font-weight:600;cursor:pointer;
+  font-family:var(--sans);transition:background .2s;margin-bottom:.6rem;
+}
+.checkout-cta:hover{background:var(--gold);color:var(--ink);}
+.secure-msg{text-align:center;font-size:.72rem;color:var(--muted);}
+
+/* ─── MODAL ─── */
+.modal-wrap{
+  display:none;position:fixed;inset:0;z-index:300;
+  background:rgba(9,9,11,.6);backdrop-filter:blur(6px);
+  padding:2rem;overflow-y:auto;
+  align-items:flex-start;justify-content:center;
+}
+.modal-wrap.open{display:flex;}
+.modal-box{
+  background:#fff;border-radius:22px;
+  width:100%;max-width:640px;
+  padding:2.2rem;position:relative;
+  animation:pop .22s ease;
+}
+@keyframes pop{from{opacity:0;transform:scale(.97);}to{opacity:1;transform:scale(1);}}
+.modal-close{
+  position:absolute;top:1.2rem;right:1.2rem;
+  background:var(--bone);border:none;border-radius:8px;
+  width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1rem;color:var(--muted);transition:color .2s;
+}
+.modal-close:hover{color:var(--ink);}
+.modal-cover{
+  height:180px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.5rem;font-size:4.5rem;
+  position:relative;overflow:hidden;
+}
+.modal-cat{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-lo);margin-bottom:.4rem;}
+.modal-box h2{
+  font-family:var(--serif);font-size:1.6rem;font-weight:900;
+  color:var(--ink);letter-spacing:-.02em;margin-bottom:.8rem;
+}
+.modal-desc{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:1.3rem;}
+.modal-features{list-style:none;margin-bottom:1.5rem;}
+.modal-features li{
+  display:flex;gap:.6rem;font-size:.875rem;color:var(--text);
+  padding:.4rem 0;border-bottom:1px solid var(--faint);
+}
+.modal-features li::before{content:'✓';color:var(--gold-lo);font-weight:700;flex-shrink:0;}
+.modal-bottom{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.modal-price{font-family:var(--serif);font-size:2rem;font-weight:900;color:var(--ink);}
+.modal-price small{font-size:1rem;color:var(--muted);text-decoration:line-through;margin-left:.3rem;}
+.modal-add{
+  background:var(--ink);color:var(--bone);border:none;border-radius:50px;
+  padding:.85rem 2rem;font-size:.95rem;font-weight:600;cursor:pointer;
+  font-family:var(--sans);transition:all .2s;
+}
+.modal-add:hover{background:var(--gold);color:var(--ink);}
+
+/* ─── CHECKOUT ─── */
+.checkout-box{
+  background:#fff;border-radius:22px;
+  width:100%;max-width:560px;
+  padding:2.2rem;position:relative;
+  animation:pop .22s ease;
+}
+.checkout-box h2{
+  font-family:var(--serif);font-size:1.4rem;font-weight:900;
+  color:var(--ink);margin-bottom:1.5rem;
+}
+.form-label{
+  font-size:.72rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.07em;color:var(--muted);margin-bottom:.4rem;display:block;
+}
+.form-input{
+  width:100%;background:var(--bone);border:1px solid var(--bone3);
+  border-radius:10px;padding:.7rem .9rem;
+  color:var(--text);font-size:.9rem;outline:none;
+  font-family:var(--sans);margin-bottom:.9rem;
+  transition:border-color .2s;
+}
+.form-input:focus{border-color:var(--gold);}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-section{
+  font-size:.72rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--gold-lo);
+  margin:1rem 0 .8rem;
+}
+.order-mini{
+  background:var(--bone);border-radius:12px;padding:1rem;margin-bottom:1.2rem;
+}
+.order-mini h4{font-size:.72rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--muted);margin-bottom:.6rem;}
+.order-row{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);padding:.2rem 0;}
+.order-row.total{
+  border-top:1px solid var(--bone3);margin-top:.5rem;padding-top:.7rem;
+  font-weight:700;color:var(--ink);
+}
+.pay-cta{
+  width:100%;background:var(--ink);color:var(--bone);
+  border:none;border-radius:50px;padding:.95rem;
+  font-size:.95rem;font-weight:600;cursor:pointer;
+  font-family:var(--sans);margin-top:.4rem;transition:background .2s;
+}
+.pay-cta:hover{background:var(--gold);color:var(--ink);}
+
+/* ─── SUCCESS ─── */
+.success-box{
+  background:#fff;border-radius:22px;
+  width:100%;max-width:400px;
+  padding:3rem 2rem;text-align:center;
+  animation:pop .22s ease;
+}
+.success-box .big-icon{font-size:3.5rem;margin-bottom:1rem;}
+.success-box h2{
+  font-family:var(--serif);font-size:1.5rem;font-weight:900;
+  color:var(--ink);margin-bottom:.7rem;
+}
+.success-box p{color:var(--muted);line-height:1.65;margin-bottom:1.5rem;font-size:.9rem;}
+.success-btn{
+  background:var(--ink);color:var(--bone);
+  border:none;border-radius:50px;padding:.8rem 2rem;
+  font-size:.9rem;font-weight:600;cursor:pointer;
+  font-family:var(--sans);transition:background .2s;
+}
+.success-btn:hover{background:var(--gold);color:var(--ink);}
+
+/* ─── FOOTER ─── */
+footer{background:var(--ink);padding:4rem 6vw 2rem;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:3rem;}
+.footer-brand .logo{color:var(--bone);margin-bottom:1rem;font-size:1.1rem;}
+.footer-brand p{font-size:.82rem;color:rgba(255,255,255,.4);line-height:1.65;max-width:240px;}
+.footer-col h5{
+  font-size:.7rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:1rem;
+}
+.footer-col a{
+  display:block;font-size:.83rem;color:rgba(255,255,255,.5);
+  text-decoration:none;margin-bottom:.5rem;transition:color .2s;cursor:pointer;
+}
+.footer-col a:hover{color:var(--gold);}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.08);padding-top:1.5rem;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+}
+.footer-bottom p{font-size:.75rem;color:rgba(255,255,255,.3);}
+
+/* ─── TOAST ─── */
+.toast-wrap{
+  position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);
+  z-index:500;pointer-events:none;display:flex;flex-direction:column;gap:.5rem;
+}
+.toast{
+  background:var(--ink);border:1px solid var(--ink3);
+  border-radius:50px;padding:.6rem 1.2rem;
+  font-size:.82rem;color:#fff;white-space:nowrap;
+  display:flex;align-items:center;gap:.5rem;
+  box-shadow:0 6px 24px rgba(0,0,0,.3);
+  animation:toastin .3s ease;
+}
+@keyframes toastin{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.toast-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:auto;gap:3rem;}
+  .hero-right{display:none;}
+  .categories-grid{grid-template-columns:repeat(3,1fr);}
+  .testi-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .footer-brand{grid-column:1/-1;}
+  .bundle-card{grid-template-columns:1fr;text-align:center;}
+  .bundle-card p{margin-left:auto;margin-right:auto;}
+}
+@media(max-width:600px){
+  .nav-links{display:none;}
+  .categories-grid{grid-template-columns:repeat(2,1fr);}
+  .form-row-2{grid-template-columns:1fr;}
+  .hero-proof{gap:1.2rem;}
+  .trust-strip{gap:1.5rem;}
+  .footer-grid{grid-template-columns:1fr;}
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Pinnacle Digital Store</h1>
-    <p class="tagline">Premium Digital Products, Instantly Accessible</p>
-  </header>
 
-  <section>
-    <h2>Our Products</h2>
-    <div class="category">
-      <h3>E‑Books</h3>
-      <p>Expert guides and resources to boost your knowledge.</p>
-    </div>
-    <div class="category">
-      <h3>Templates</h3>
-      <p>Ready‑made business and finance templates to save time.</p>
-    </div>
-    <div class="category">
-      <h3>Courses</h3>
-      <p>Step‑by‑step digital training for personal and professional growth.</p>
-    </div>
-    <a href="mailto:info@pinnacledigitalstore.com" class="btn">Contact Us</a>
-  </section>
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    Pinnacle Digital
+  </div>
+  <div class="nav-links">
+    <a onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Products</a>
+    <a onclick="document.getElementById('bundle').scrollIntoView({behavior:'smooth'})">Bundle</a>
+    <a onclick="document.getElementById('reviews').scrollIntoView({behavior:'smooth'})">Reviews</a>
+    <a>About</a>
+  </div>
+  <button class="nav-cta" onclick="openCart()">
+    Cart <span class="cart-pill" id="cartCount">0</span>
+  </button>
+</nav>
 
-  <footer>
-    &copy; 2026 Pinnacle Digital Store. All rights reserved.
-  </footer>
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="5"/></svg>
+      Premium Digital Products
+    </div>
+    <h1>Tools That Pay<br>For <em>Themselves</em></h1>
+    <p class="hero-sub">Instant-download templates, ebooks, and toolkits built for entrepreneurs, creators, and professionals who are serious about results.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Browse Products</a>
+      <button class="btn-ghost" onclick="document.getElementById('bundle').scrollIntoView({behavior:'smooth'})">See the Bundle →</button>
+    </div>
+    <div class="hero-proof">
+      <div class="proof-item"><div class="proof-num">120+</div><div class="proof-label">Digital Products</div></div>
+      <div class="proof-item"><div class="proof-num">4.9★</div><div class="proof-label">Average Rating</div></div>
+      <div class="proof-item"><div class="proof-num">5,000+</div><div class="proof-label">Customers</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="product-stack">
+      <div class="stack-card sc3">
+        <div class="sc-icon">📱</div>
+        <div class="sc-label">Marketing</div>
+        <div class="sc-title">Social Media Content Calendar</div>
+        <div class="sc-price">$17</div>
+      </div>
+      <div class="stack-card sc2">
+        <div class="sc-icon">📈</div>
+        <div class="sc-label">Business</div>
+        <div class="sc-title">Business Plan Pro Template</div>
+        <div class="sc-price">$19</div>
+      </div>
+      <div class="stack-card sc1">
+        <div class="sc-icon">💰</div>
+        <div class="sc-label" style="color:rgba(201,168,76,.7)">Finance</div>
+        <div class="sc-title">Personal Finance Mastery</div>
+        <div class="sc-price">$15</div>
+      </div>
+      <div class="stack-badge">⬇ Instant Download</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<!-- ─── CATEGORY ICONS ─── -->
+<section class="section-wrap categories-bg" id="categories">
+  <div class="section-header" style="margin-bottom:2rem;">
+    <div class="s-eyebrow" style="color:rgba(201,168,76,.7)">Browse by Category</div>
+    <h2 style="color:#fff;">Find What You Need</h2>
+  </div>
+  <div class="categories-grid" id="catGrid"></div>
+</section>
+
+<!-- ─── FEATURED PRODUCTS ─── -->
+<section class="section-wrap featured-bg" id="products">
+  <div class="section-header">
+    <div class="s-eyebrow">Featured Products</div>
+    <h2>Best Sellers</h2>
+    <p>Hand-picked, professionally designed digital products ready for instant download.</p>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- ─── TRUST ─── -->
+<div class="trust-strip">
+  <div class="trust-item"><span class="trust-icon">⚡</span> Instant delivery after purchase</div>
+  <div class="trust-item"><span class="trust-icon">🔒</span> Secure SSL checkout</div>
+  <div class="trust-item"><span class="trust-icon">↩️</span> 30-day money-back guarantee</div>
+  <div class="trust-item"><span class="trust-icon">♾️</span> Lifetime access — download anytime</div>
+  <div class="trust-item"><span class="trust-icon">📧</span> Delivered to your email instantly</div>
+</div>
+
+<!-- ─── BUNDLE ─── -->
+<section class="bundle-section" id="bundle">
+  <div class="bundle-card">
+    <div>
+      <div class="bundle-eyebrow">★ LIMITED TIME OFFER</div>
+      <h2>The Ultimate<br>Business Bundle</h2>
+      <p>Everything you need to launch, grow, and scale your online business. Three of our best-selling products bundled together at a price that pays for itself in hours.</p>
+      <div class="bundle-includes">
+        <div class="bundle-tag"><span>📊</span> Business Plan Pro</div>
+        <div class="bundle-tag"><span>💰</span> Finance Mastery Ebook</div>
+        <div class="bundle-tag"><span>📱</span> Content Calendar</div>
+      </div>
+      <button class="bundle-cta" onclick="addBundle()">Get All 3 — Save 60%</button>
+    </div>
+    <div class="bundle-right">
+      <div class="bundle-price-old">Was $51.00</div>
+      <div class="bundle-price">$39</div>
+      <div class="bundle-save">You save $12</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section class="testimonials-bg" id="reviews">
+  <div class="section-wrap" style="padding-top:0;padding-bottom:0;">
+  <div class="section-header">
+    <div class="s-eyebrow">Customer Reviews</div>
+    <h2>What People Are Saying</h2>
+  </div>
+  <div class="testi-grid" id="testiGrid"></div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo"><div class="logo-dot"></div> Pinnacle Digital</div>
+      <p>Premium digital products for entrepreneurs and creators. Instant downloads. Real results.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Products</h5>
+      <a>Business Templates</a><a>Finance Ebooks</a><a>Marketing Kits</a><a>Productivity Tools</a><a>Bundles</a>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <a>About Us</a><a>Affiliate Program</a><a>Blog</a><a>Press Kit</a>
+    </div>
+    <div class="footer-col">
+      <h5>Support</h5>
+      <a>FAQ</a><a href="mailto:info@pinnacledigital.store">Contact</a><a>Refund Policy</a><a>Terms of Service</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Pinnacle Digital Store. All rights reserved.</p>
+    <p>Secure payments · Instant delivery · 30-day guarantee</p>
+  </div>
+</footer>
+
+<!-- ─── CART ─── -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="cart" id="cart">
+  <div class="cart-head">
+    <h3>Your Cart</h3>
+    <button class="close-x" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-foot" id="cartFoot" style="display:none">
+    <div class="cart-row"><span>Subtotal</span><span id="cartSub"></span></div>
+    <div class="cart-row"><span>Instant delivery</span><span style="color:#166534">Free</span></div>
+    <div class="cart-row big"><span>Total</span><span id="cartTot"></span></div>
+    <button class="checkout-cta" onclick="openCheckout()">Checkout — Instant Access →</button>
+    <div class="secure-msg">🔒 SSL encrypted · 30-day guarantee</div>
+  </div>
+</div>
+
+<!-- ─── MODALS ─── -->
+<div class="modal-wrap" id="productModal" onclick="closeProductModal(event)">
+  <div class="modal-box" id="modalBox"></div>
+</div>
+
+<div class="modal-wrap" id="checkoutModal" onclick="closeCheckoutModal(event)">
+  <div class="checkout-box" id="checkoutBox"></div>
+</div>
+
+<div class="modal-wrap" id="successModal">
+  <div class="success-box">
+    <div class="big-icon">🎉</div>
+    <h2>Order Complete!</h2>
+    <p>Your download links have been sent to your email. Thank you for shopping with Pinnacle Digital Store — enjoy your products!</p>
+    <button class="success-btn" onclick="closeSuccess()">Continue Shopping</button>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+// ─── DATA ───
+const CATS = [
+  { id:'templates', icon:'📋', name:'Templates', count:28 },
+  { id:'ebooks',    icon:'📗', name:'Ebooks',    count:19 },
+  { id:'finance',   icon:'💰', name:'Finance',   count:14 },
+  { id:'marketing', icon:'📣', name:'Marketing', count:22 },
+  { id:'tools',     icon:'🛠️',  name:'Tools',     count:17 },
+  { id:'bundles',   icon:'📦', name:'Bundles',   count:8  },
+];
+
+const PRODUCTS = [
+  { id:1, emoji:'📊', name:'Business Plan Pro Template', cat:'templates', tag:'hot',
+    price:19, old:39, rating:4.9, reviews:218, dl:'3.2K',
+    desc:'A fully editable, investor-ready business plan template used by 2,000+ entrepreneurs. Covers financials, market analysis, and competitive strategy.',
+    features:['15-page professional layout','Financial projections table','Competitive analysis grid','12-month marketing calendar','90-day action plan'],
+    file:'business-plan-pro-template.pdf', bg:'#fff8f0' },
+
+  { id:2, emoji:'📱', name:'Social Media Content Calendar', cat:'marketing', tag:'new',
+    price:17, old:29, rating:4.8, reviews:184, dl:'2.1K',
+    desc:'Plan 90 days of content across all platforms in one system. Includes 200+ caption templates and a hashtag bank across 10 niches.',
+    features:['90-day monthly planning calendar','200+ fill-in-the-blank captions','1,000+ hashtags across 10 niches','Weekly performance tracker','Works for all major platforms'],
+    file:'social-media-content-calendar.pdf', bg:'#f5f0ff' },
+
+  { id:3, emoji:'💰', name:'Personal Finance Mastery', cat:'ebooks', tag:'bestseller',
+    price:15, old:24, rating:4.9, reviews:312, dl:'4.8K',
+    desc:'The step-by-step guide to budgeting, saving, investing, and building wealth. 8 chapters of actionable, no-fluff content with worksheets.',
+    features:['8-chapter practical guide','50/30/20 budget framework','Debt payoff strategies (Snowball & Avalanche)','Compound interest tables','90-day wealth action plan'],
+    file:'personal-finance-mastery.pdf', bg:'#f0fff4' },
+
+  { id:4, emoji:'📈', name:'Freelancer Invoice & Billing Pack', cat:'finance', tag:'',
+    price:9, old:18, rating:4.7, reviews:97, dl:'1.7K',
+    desc:'6 professionally designed invoice templates, a client tracker, and monthly earnings dashboard — everything a freelancer needs.',
+    features:['6 invoice templates','Client & project tracker','Monthly revenue dashboard','Tax-ready income log','Excel & Google Sheets versions'],
+    file:'#', bg:'#fff0f5' },
+
+  { id:5, emoji:'🚀', name:'Startup Launch Checklist Toolkit', cat:'templates', tag:'hot',
+    price:17, old:34, rating:5.0, reviews:76, dl:'890',
+    desc:'The complete pre-launch checklist for founders. Covers legal, branding, website, marketing, and first-100-customers strategy.',
+    features:['200-point launch checklist','Legal setup guide','Branding brief template','Landing page copy framework','Email launch sequence templates'],
+    file:'#', bg:'#fffbf0' },
+
+  { id:6, emoji:'✍️', name:'Copywriting Secrets Ebook', cat:'ebooks', tag:'new',
+    price:15, old:30, rating:4.8, reviews:203, dl:'2.9K',
+    desc:'Learn the persuasion frameworks that sell. 12 proven copy formulas top copywriters use to write ads, emails, and pages that convert.',
+    features:['80-page in-depth guide','12 proven copy frameworks','Real-world rewrite examples','Email sequence templates','Sales page blueprint'],
+    file:'#', bg:'#f0f5ff' },
+
+  { id:7, emoji:'🎯', name:'Marketing Strategy Playbook', cat:'marketing', tag:'',
+    price:22, old:44, rating:4.9, reviews:145, dl:'1.4K',
+    desc:'A battle-tested marketing guide covering SEO, paid ads, social media, content, and email — built for solopreneurs and small business owners.',
+    features:['Strategy across 5 channels','90-day action plan','KPI tracking dashboard','Ad copy swipe file','Monthly review framework'],
+    file:'#', bg:'#f5fff5' },
+
+  { id:8, emoji:'📉', name:'Budget & Savings Tracker 2026', cat:'finance', tag:'new',
+    price:8, old:16, rating:4.7, reviews:267, dl:'5.1K',
+    desc:'The most beautiful budget tracker you will ever use. Track income, expenses, savings goals, and net worth all in one spreadsheet.',
+    features:['Monthly & yearly views','Savings goal tracker','Net worth calculator','Bill payment reminder','Works offline in Excel'],
+    file:'#', bg:'#fffff0' },
+
+  { id:9, emoji:'🛍️', name:'E-commerce Store Launch Kit', cat:'tools', tag:'hot',
+    price:24, old:48, rating:4.9, reviews:132, dl:'1.6K',
+    desc:'Everything to launch a profitable online store: product research tools, supplier list, pricing calculator, and 60-day marketing plan.',
+    features:['Product research worksheet','Supplier contact template','Profit margin calculator','60-day marketing calendar','Email & SMS templates'],
+    file:'#', bg:'#fff5f0' },
+
+  { id:10, emoji:'📧', name:'Email Marketing Mega Swipe File', cat:'marketing', tag:'',
+    price:13, old:26, rating:4.9, reviews:229, dl:'3.7K',
+    desc:'100+ proven subject lines, 50 full email templates, and a 5-part welcome sequence — copy, paste, and convert.',
+    features:['100+ subject line formulas','50 full email templates','5-part welcome sequence','Re-engagement campaign','Segmentation strategy guide'],
+    file:'#', bg:'#f5f0ff' },
+];
+
+const REVIEWS = [
+  { text:'The Business Plan template saved me weeks of work. I used it to pitch investors and closed my first round. Incredibly thorough.', name:'Sipho M.', role:'Startup Founder, Johannesburg', avatar:'👨🏾‍💼' },
+  { text:'I went from zero savings to a 3-month emergency fund in 8 months just by following the Finance Mastery ebook. Game changer.', name:'Aisha K.', role:'Nurse, Cape Town', avatar:'👩🏾‍⚕️' },
+  { text:'The content calendar alone is worth 10x the price. I\'ve been posting consistently for 60 days straight. My Instagram grew 4,000 followers.', name:'Lerato D.', role:'Content Creator, Durban', avatar:'👩🏾‍💻' },
+  { text:'Every single product is polished, professional, and actually useful. Not the usual fluff you get online. Will buy more.', name:'James O.', role:'Freelance Designer', avatar:'👨🏽‍🎨' },
+  { text:'Downloaded the Business Plan template at 10pm and had a complete draft by midnight. The structure guides you perfectly.', name:'Nomsa T.', role:'E-commerce Entrepreneur', avatar:'👩🏿‍💼' },
+  { text:'The Copywriting Ebook alone tripled my email open rates. The frameworks are timeless and the examples are clear. Brilliant product.', name:'Ryan P.', role:'Marketing Consultant', avatar:'👨🏼‍💻' },
+];
+
+const MARQUEE_ITEMS = ['Instant Download','30-Day Guarantee','5,000+ Customers','4.9 Star Rating','Secure Checkout','Trusted by Entrepreneurs','No Subscription Required','Lifetime Access'];
+
+// ─── INIT ───
+let cart = [];
+let activeCat = 'all';
+
+function init() {
+  // Marquee
+  const track = document.getElementById('marqueeTrack');
+  const full = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
+  track.innerHTML = full.map(t =>
+    `<div class="marquee-item"><span>✦</span>${t}</div>`
+  ).join('');
+
+  // Categories
+  const catGrid = document.getElementById('catGrid');
+  const allCat = { id:'all', icon:'✦', name:'All', count: PRODUCTS.length };
+  [allCat, ...CATS].forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'cat-card' + (c.id === 'all' ? ' active' : '');
+    el.innerHTML = `<div class="cat-icon">${c.icon}</div>
+      <div class="cat-name">${c.name}</div>
+      <div class="cat-count">${c.count}</div>`;
+    el.onclick = () => {
+      document.querySelectorAll('.cat-card').forEach(x => x.classList.remove('active'));
+      el.classList.add('active');
+      activeCat = c.id;
+      renderProducts();
+      document.getElementById('products').scrollIntoView({ behavior:'smooth' });
+    };
+    catGrid.appendChild(el);
+  });
+
+  renderProducts();
+
+  // Testimonials
+  const tg = document.getElementById('testiGrid');
+  tg.innerHTML = REVIEWS.map(r => `
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">${r.text}</div>
+      <div class="testi-author">
+        <div class="testi-avatar">${r.avatar}</div>
+        <div>
+          <div class="testi-name">${r.name}</div>
+          <div class="testi-role">${r.role}</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function renderProducts() {
+  const list = activeCat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === activeCat);
+  const grid = document.getElementById('productsGrid');
+  if (!list.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted)">No products in this category yet — check back soon!</div>`;
+    return;
+  }
+  grid.innerHTML = list.map(p => {
+    const inCart = !!cart.find(c => c.id === p.id);
+    const tagHtml = p.tag ? `<div class="tag tag-${p.tag}">${p.tag === 'hot' ? '🔥 Hot' : p.tag === 'new' ? '✨ New' : '⭐ Bestseller'}</div>` : '';
+    return `
+    <div class="product-card" onclick="openProduct(${p.id})">
+      <div class="card-cover" style="background:${p.bg}">
+        <div class="card-cover-icon">${p.emoji}</div>
+        <div class="card-cover-bg">${p.emoji}</div>
+        ${tagHtml}
+      </div>
+      <div class="card-body">
+        <div class="card-cat">${p.cat}</div>
+        <div class="card-title">${p.name}</div>
+        <div class="card-desc">${p.desc.slice(0,90)}…</div>
+        <div class="card-meta">
+          <span><span class="stars">★</span> ${p.rating} (${p.reviews})</span>
+          <span>⬇ ${p.dl}</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$${p.price}<span class="card-price-old">$${p.old}</span></div>
+          <button class="card-btn ${inCart?'added':''}"
+            onclick="event.stopPropagation();addToCart(${p.id},this)">
+            ${inCart ? '✓ Added' : '+ Add'}
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ─── CART ───
+function addToCart(id, btn) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p || cart.find(c => c.id === id)) return;
+  cart.push(p);
+  updateCart();
+  if (btn) { btn.textContent = '✓ Added'; btn.classList.add('added'); }
+  toast(`${p.emoji} "${p.name}" added`);
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(c => c.id !== id);
+  updateCart();
+  renderCartBody();
+  renderProducts();
+  toast('Item removed');
+}
+
+function updateCart() {
+  document.getElementById('cartCount').textContent = cart.length;
+  renderCartBody();
+}
+
+function renderCartBody() {
+  const body = document.getElementById('cartBody');
+  const foot = document.getElementById('cartFoot');
+  if (!cart.length) {
+    body.innerHTML = `<div class="cart-empty-state">
+      <div class="empty-icon">🛒</div>
+      <p>Your cart is empty.<br/>Add products to get started.</p>
+    </div>`;
+    foot.style.display = 'none';
+    return;
+  }
+  foot.style.display = 'block';
+  body.innerHTML = cart.map(p => `
+    <div class="cart-line">
+      <div class="cart-line-icon">${p.emoji}</div>
+      <div class="cart-line-info">
+        <div class="cart-line-name">${p.name}</div>
+        <div class="cart-line-price">$${p.price}</div>
+      </div>
+      <button class="rm-btn" onclick="removeFromCart(${p.id})">✕</button>
+    </div>`).join('');
+  const total = cart.reduce((s,p) => s+p.price, 0);
+  document.getElementById('cartSub').textContent = `$${total.toFixed(2)}`;
+  document.getElementById('cartTot').textContent = `$${total.toFixed(2)}`;
+}
+
+function openCart()  { document.getElementById('overlay').classList.add('open'); document.getElementById('cart').classList.add('open'); }
+function closeCart() { document.getElementById('overlay').classList.remove('open'); document.getElementById('cart').classList.remove('open'); }
+
+// ─── PRODUCT MODAL ───
+function openProduct(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  const inCart = !!cart.find(c => c.id === id);
+  const fileLink = p.file !== '#'
+    ? `<a href="${p.file}" download style="font-size:.8rem;color:var(--gold-lo);text-decoration:underline;margin-left:1rem;">⬇ Preview PDF</a>`
+    : '';
+  document.getElementById('modalBox').innerHTML = `
+    <button class="modal-close" onclick="document.getElementById('productModal').classList.remove('open')">✕</button>
+    <div class="modal-cover" style="background:${p.bg}">${p.emoji}</div>
+    <div class="modal-cat">${p.cat}</div>
+    <h2>${p.name}</h2>
+    <p class="modal-desc">${p.desc}</p>
+    <ul class="modal-features">${p.features.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <div class="modal-bottom">
+      <div>
+        <div class="modal-price">$${p.price}<small>$${p.old}</small></div>
+        ${fileLink}
+      </div>
+      <button class="modal-add" onclick="addToCart(${p.id});document.getElementById('productModal').classList.remove('open')">
+        ${inCart ? '✓ In Cart' : '🛒 Add to Cart'}
+      </button>
+    </div>`;
+  document.getElementById('productModal').classList.add('open');
+}
+function closeProductModal(e) {
+  if (e.target === document.getElementById('productModal'))
+    document.getElementById('productModal').classList.remove('open');
+}
+
+// ─── CHECKOUT ───
+function openCheckout() {
+  closeCart();
+  const total = cart.reduce((s,p) => s+p.price, 0);
+  document.getElementById('checkoutBox').innerHTML = `
+    <button class="modal-close" onclick="document.getElementById('checkoutModal').classList.remove('open')">✕</button>
+    <h2>Complete Your Order</h2>
+    <div class="order-mini">
+      <h4>Order Summary</h4>
+      ${cart.map(p=>`<div class="order-row"><span>${p.emoji} ${p.name}</span><span>$${p.price}</span></div>`).join('')}
+      <div class="order-row total"><span>Total</span><span>$${total.toFixed(2)}</span></div>
+    </div>
+    <div class="form-section">👤 Your Details</div>
+    <div class="form-row-2">
+      <div><label class="form-label">First Name</label><input class="form-input" placeholder="Jane"/></div>
+      <div><label class="form-label">Last Name</label><input class="form-input" placeholder="Smith"/></div>
+    </div>
+    <label class="form-label">Email Address</label>
+    <input class="form-input" type="email" placeholder="jane@example.com"/>
+    <div class="form-section">💳 Payment</div>
+    <label class="form-label">Card Number</label>
+    <input class="form-input" placeholder="4242 4242 4242 4242" maxlength="19"/>
+    <div class="form-row-2">
+      <div><label class="form-label">Expiry</label><input class="form-input" placeholder="MM / YY"/></div>
+      <div><label class="form-label">CVV</label><input class="form-input" placeholder="123" maxlength="3"/></div>
+    </div>
+    <button class="pay-cta" onclick="placeOrder()">🔒 Pay $${total.toFixed(2)} — Get Instant Access</button>
+    <div class="secure-msg" style="margin-top:.8rem;font-size:.72rem;color:var(--muted)">256-bit SSL · 30-day money-back guarantee</div>`;
+  document.getElementById('checkoutModal').classList.add('open');
+}
+function closeCheckoutModal(e) {
+  if (e.target === document.getElementById('checkoutModal'))
+    document.getElementById('checkoutModal').classList.remove('open');
+}
+function placeOrder() {
+  document.getElementById('checkoutModal').classList.remove('open');
+  cart = [];
+  updateCart();
+  document.getElementById('successModal').classList.add('open');
+}
+function closeSuccess() {
+  document.getElementById('successModal').classList.remove('open');
+  renderProducts();
+}
+
+// ─── BUNDLE ───
+function addBundle() {
+  if (!cart.find(c => c.id === 999)) {
+    cart.push({ id:999, emoji:'📦', name:'Ultimate Business Bundle (3 Products)', price:39 });
+    updateCart();
+  }
+  toast('📦 Bundle added to cart!');
+  openCart();
+}
+
+// ─── TOAST ───
+function toast(msg) {
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.innerHTML = `<div class="toast-dot"></div>${msg}`;
+  document.getElementById('toastWrap').appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+init();
+</script>
 </body>
 </html>
